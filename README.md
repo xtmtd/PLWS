@@ -4,5 +4,29 @@ We present a novel WGS-based pipeline for extracting essential phylogenomic mark
 
 All four bash scripts are only tested in Centos operating system, and may be available for other Linux systems. Their functions are described below.
   1. script1_Genome_assembly.sh: Script 1 performs main rapid genome assembly steps, i.e. read quality trimming and normalization (BBtools),  error correction (Lighter), multi-k-mer assembly (Minia3), reduction of heterozygous contigs (Redundans), scaffolding (BESST), gap filling (GapCloser) and BUSCO assessment (BUSCO).
-  2. script2_BUSCO_extraction.sh: Script 2 extracts single-copy orthologs (BUSCOs) from previous BUSCO assessments and generates alignment matrices of 50%-100% completeness (MAFFT, trimAl and FASconCAT-G) and partitioning schemes for phylogenetic analyses.
-  3. 
+  2. script2_BUSCO_extraction.sh: Script 2 extracts single-copy orthologs (BUSCOs) from previous BUSCO assessments and generates nuclotide/protein alignment matrices of 50%-100% completeness (MAFFT, trimAl and FASconCAT-G) and partitioning schemes for phylogenetic analyses.
+  3. script3_UCE_probe_design.sh: Script 3 can design UCE probe with tools samtools, art, BBtools, faToTwoBit and stampy.
+  4. script4_UCE_extraction.sh: Script 4 extracts UCE loci from genome assemblies and generates alignment matrices of 50%-100% completeness and partitioning schemes for phylogenetic analyses. Tools MAFFT, seqkit, trimAl, faToTwoBit and FASconCAT are required.
+
+Requirements
+Some bioinformatic tools are neccessary for above scripts. Most of them are recommended to be added into the environmental paths. Softwares, versions and source ate listed below.
+
+  SRA-tools v2.9.0	https://github.com/ncbi/sratoolkit
+  parallel-fastq-dump v0.6.3	https://github.com/rvalieris/parallel-fastq-dump
+  BBTools v37.93	https://sourceforge.net/projects/bbmap/
+  Lighter v1.1.1	https://github.com/mourisl/Lighter
+  Minia v3.00-alpha1	https://github.com/GATB/minia
+  Redundans v0.13c	https://github.com/lpryszcz/redundans
+  Minimap2 v2.9	https://github.com/lh3/minimap2
+  Samtools v1.7	http://www.htslib.org/
+  BESST v2.2.8	https://github.com/ksahlin/BESST
+  GapCloser v1.12	http://soap.genomics.org.cn/
+  BUSCO v3.0.2	http://busco.ezlab.org/
+  MAFFT v7.394	https://mafft.cbrc.jp/alignment/software/
+  trimAl v1.4.1	http://trimal.cgenomics.org/
+  FASconCAT-G v1.04	https://github.com/PatrickKueck/FASconCAT-G
+  PHYLUCE v1.5.0	http://phyluce.readthedocs.io/en/latest/index.html
+  faToTwoBit	http://hgdownload.soe.ucsc.edu/admin/exe/
+  ART-20160605	https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm
+  Stampy v1.0.32	http://www.well.ox.ac.uk/project-stampy
+  SeqKit v0.8.0	https://github.com/shenwei356/seqkit
