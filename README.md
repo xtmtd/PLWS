@@ -21,7 +21,7 @@ Some bioinformatic tools are neccessary for above scripts. Most of them are reco
 ----------------------------------------------------------------------------------------------------------------------------------------
 User manual
 
-The requirements for each script have been described in the beginning of the bash script text. Values of variables/parameters, such as read length, tool path, number of threads etc., can be modified prior to analyses according to the status of sequencing data, computers etc.
+The requirements for each script have been described in the beginning of the bash script text. Values of variables/parameters, such as read length, tool path, number of threads etc., can be modified prior to analyses according to the status of sequencing data, computers etc. When everything is ready, just type 'sh ***.sh'.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 Contact
