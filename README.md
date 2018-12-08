@@ -15,14 +15,56 @@ Requirements
 
 Some bioinformatic tools are neccessary for above scripts. Most of them are recommended to be added into the environmental paths. Softwares, versions and source ate listed below.
 
-  SRA-tools v2.9.0 (https://github.com/ncbi/sratoolkit), parallel-fastq-dump v0.6.3 (https://github.com/rvalieris/parallel-fastq-dump)
-  BBTools v37.93 (https://sourceforge.net/projects/bbmap/), Lighter v1.1.1 (https://github.com/mourisl/Lighter), Minia v3.00-alpha1	(https://github.com/GATB/minia), Redundans v0.13c	(https://github.com/lpryszcz/redundans), Minimap2 v2.9	(https://github.com/lh3/minimap2), Samtools v1.7	(http://www.htslib.org/), BESST v2.2.8	(https://github.com/ksahlin/BESST)
-  GapCloser v1.12	(http://soap.genomics.org.cn/), BUSCO v3.0.2	(http://busco.ezlab.org/), MAFFT v7.394	(https://mafft.cbrc.jp/alignment/software/), trimAl v1.4.1	(http://trimal.cgenomics.org/), FASconCAT-G v1.04	(https://github.com/PatrickKueck/FASconCAT-G), PHYLUCE v1.5.0	(http://phyluce.readthedocs.io/en/latest/index.html), faToTwoBit	(http://hgdownload.soe.ucsc.edu/admin/exe/), ART-20160605	(https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm), Stampy v1.0.32	(http://www.well.ox.ac.uk/project-stampy), SeqKit v0.8.0	(https://github.com/shenwei356/seqkit)
+  SRA-tools v2.9.0 (https://github.com/ncbi/sratoolkit)  
+  parallel-fastq-dump v0.6.3 (https://github.com/rvalieris/parallel-fastq-dump)  
+  BBTools v38.32 (https://sourceforge.net/projects/bbmap/)  
+  Lighter v1.1.2 (https://github.com/mourisl/Lighter)  
+  Minia v3.2	(https://github.com/GATB/minia)  
+  Redundans v0.14c	(https://github.com/lpryszcz/redundans)  
+  Minimap2 v2.12	(https://github.com/lh3/minimap2)  
+  Samtools v1.9	(http://www.htslib.org/)  
+  BESST v2.2.8	(https://github.com/ksahlin/BESST)  
+  GapCloser v1.12	(http://soap.genomics.org.cn/)  
+  BUSCO v3.0.2	(http://busco.ezlab.org/)  
+  MAFFT v7.407	(https://mafft.cbrc.jp/alignment/software/)  
+  trimAl v1.4.1	(http://trimal.cgenomics.org/)  
+  FASconCAT-G v1.04	(https://github.com/PatrickKueck/FASconCAT-G)  
+  PHYLUCE v1.6.6	(http://phyluce.readthedocs.io/en/latest/index.html)  
+  faToTwoBit	(http://hgdownload.soe.ucsc.edu/admin/exe/)  
+  ART-20160605	(https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm)  
+  Stampy v1.0.32	(http://www.well.ox.ac.uk/project-stampy)  
+  SeqKit v0.9.3	(https://github.com/shenwei356/seqkit)
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 User manual
 
 The requirements for each script have been described in the beginning of the bash script text. Values of variables/parameters, such as read length, tool path, number of threads etc., can be modified prior to analyses according to the status of sequencing data, computers etc. When everything is ready, just type 'sh ***.sh'.
+
+Below are some notes for each script although more details have been described in the script.
+
+Script1: 
+1) Modify the names of input raw paired read files as 1.raw.fq.gz and 2.raw.fq.gz in the working folder.  
+2) The default starting kmer value is 21 and thus kmer values are 21, 21+20, 21+2*20....  
+3) All the statistics of input reads and assemblies generated in the whole asembly progress are summerized respectively /bbtool/bbtool.log and /minia/assembly.log.  
+4) Tools pigz, BBTools, Lighter, Minia, redundans, Minimap2, samtools, BESST, GapCloser and BUSCO may be used in this script.
+
+Script2:  
+1) Copy all the BUSCO results (run_* folders) into the same subfolder ./raw_busco.  
+2) Tools MAFFT, trimAl and FASconCAT-G are used in this script and the former two are recommended to be installed in environmental paths.
+
+Script3:   
+1) Prepare a species list file (species.list with base species excluded) in the initial working folder.  
+2) Copy all the genome assemblies to working_folder/assembly/ and replace assembly name using "species_name.fa". 
+3) Tools samtools, art, BBtools, faToTwoBit and stampy are used in this script and the former two are recommended to be installed in environmental paths.
+
+Script4:  
+1) Prepare a probe set file (***.fasta) in the initial working folder.
+2) Modify all genome assemblies endding with .fa and copy them to working_folder/genomes/ 
+3) Tools MAFFT, seqkit, trimAl, faToTwoBit and FASconCAT are used in this script and the former three were recommended to be installed in environmental paths.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+To faciliate the use of our pipeline and simplify the installation of various packages, we also prepared the virtual mirror (.vmdk), including all the bioinformatic tools and custom scripts ready in the CENTOS 7.3 system. It can be directly opened by VMware or VirtualBox, which are often installed on Windows systems. Please download it here: .
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 Contact
