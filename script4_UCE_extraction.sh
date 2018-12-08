@@ -1,13 +1,13 @@
 #!/bin/bash 
 
 #Prepare a probe set file (Phthiraptera-2.8Kv1.fasta) in the initial working folder
-#modify all genome assemblies endding with .fa and copy them to working_folder/genomes/ 
+#modify all genome assemblies endding with .fa and copy them to working_folder/genomes/
 #Tools MAFFT, seqkit, trimAl, faToTwoBit and FASconCAT are used in this script and the former three have been installed in environmental paths
 
 #Define variables
-DIR_fa2bit="/mnt/data/phylogenomics/Pediculus_humanus/uce"
-DIR_TRIMAL="/home/zf/trimal-1.4.1"
-DIR_FASconCAT="/home/zf/FASconCAT-G"
+DIR_fa2bit="/usr/local/bin"
+DIR_TRIMAL="/home/zf/install/trimal-1.4.1"
+DIR_FASconCAT="/home/zf/install/FASconCAT-G"
 THREADS="8"
 GROUP="Phthiraptera"
 PROBE="Phthiraptera-2.8Kv1.fasta"
@@ -32,11 +32,13 @@ done
 cd ..
 
 #prepare a species list
+echo "prepare a species list..."
 ls genomes/ | sed "s/.fa//g" > species.list
 
 SPECIES_NAME=$(cat species.list)
 
 #Generate a python script simplify_headers.py to simplify the sequence head
+echo "simplify the sequence head..."
 echo '#!/usr/bin/python' >> simplify_headers.py
 echo 'from Bio import SeqIO' >> simplify_headers.py
 for SPECIES in $SPECIES_NAME
@@ -60,6 +62,7 @@ rm *.fa
 for SPECIES in *; do mkdir ${SPECIES%.*}; mv $SPECIES ${SPECIES%.*}; done
 
 #Convert genomes to 2bit format
+echo "Convert genomes to 2bit format..."
 for SPECIES in *; do $DIR_fa2bit/faToTwoBit $SPECIES/$SPECIES.fasta $SPECIES/${SPECIES%.*}.2bit; done
 
 #Generate the configure file for the genome data
@@ -67,10 +70,12 @@ echo '[scaffolds]' >> ../$GROUP-genome.conf
 for SPECIES in $SPECIES_NAME; do echo "$SPECIES:../genomes/$SPECIES/$SPECIES.2bit" >> ../$GROUP-genome.conf; done
 
 #Align bait set to the extant genome sequences
+echo "Align bait set to the extant genome sequences..."
 cd .. && mkdir -p uces/$GROUP-genome-lastz && cd uces/
 phyluce_probe_run_multiple_lastzs_sqlite --db uces.sqlite --output $GROUP-genome-lastz --probefile ../$PROBE --scaffoldlist $(cat ../species.list) --genome-base-path ../genomes --identity 50 --cores $THREADS
 
 #Extracting FASTA sequence matching UCE loci from genome sequences
+echo "Extracting FASTA sequence matching UCE loci from genome sequences..."
 phyluce_probe_slice_sequence_from_genomes --conf ../$GROUP-genome.conf --lastz $GROUP-genome-lastz --output $GROUP-genome-fasta --flank 400 --name-pattern ""$PROBE"_v_{}.lastz.clean"
 
 #prepare the configure file for species list
@@ -101,6 +106,7 @@ do
 done
 
 #Extract FASTA information of UCEs
+echo "Extract final UCEs..."
 cd ../taxon-sets/insilico-incomplete/
 phyluce_assembly_get_fastas_from_match_counts --contigs ../../$GROUP-genome-fasta --locus-db ../../in-silico-lastz/probe.matches.sqlite --match-count-output insilico-incomplete.conf --output insilico-incomplete.fasta --incomplete-matrix insilico-incomplete.incomplete --log-path ../../log
 
@@ -188,5 +194,4 @@ do
   echo "$percent% matrix has $(awk 'NF{a=$0}END{print a}' matrix$percent/FcC_supermatrix_partition.txt | sed -r 's/.*-(.*).*/\1/') sites and $(cat matrix$percent/FcC_supermatrix_partition.txt | wc -l) loci" | tee -a extraction.log
 done
 echo -e '\n'
-echo "All the supermatrices and partition files are kept in extraction/uces/taxon-sets/concat/matrices"
-
+echo "All the supermatrices and partition files are kept in /uces/taxon-sets/concat/matrices"
