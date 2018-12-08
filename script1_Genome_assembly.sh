@@ -4,22 +4,23 @@
 #Tools pigz, BBTools, Lighter, Minia, redundans, Minimap2, samtools, BESST, GapCloser and BUSCO may be used in this script
 
 #modify the names of input raw paired read files as 1.raw.fq.gz and 2.raw.fq.gz in the working folder
-#the default starting kmer value is 21 and thus kmer values are 21, 21+20, 21+2*20....; increment value 20 can be modified in below variable 'KMER_STEP' 
+#the default starting kmer value is 21 and thus kmer values are 21, 21+20, 21+2*20....
+#all the statistics of input reads and assemblies generated in the whole asembly progress are summerized respectively /bbtool/bbtool.log and /minia/assembly.log
 
 
 #Define variables
-SRA="SRR5088473"
-SPECIES="Pediculus schaeffi_1"
+SRA="SRR5088473" #NCBI accession number
+SPECIES="Escherichia_coli"
 THREADS="8"
-READ_LENGTH="150"
-GENOME_SIZE="100000000"
-MEMORY="10000"
+READ_LENGTH="100" #bp
+GENOME_SIZE="4000000"  #value usually slightly smaller than the real genome size
+MEMORY="10000" #Mb
 NORMALIZATION_TARGET="10"  #may be ranged from 10 to 20 or higher for low-coverage reads
-KMER_STEP="20"  #step size to control increments of kmer values
 DIR_REDUNDANS="/home/zf/install/redundans"
 DIR_BUSCO="/home/zf/install/busco-3.0.2"
-DIR_BUSCO_LINEAGE="/home/zf/install/busco-3.0.2/lineage"  #Predefined BUSCO set for Insecta can be downloaded from BUSCO website
+DIR_BUSCO_LINEAGE="/home/zf/install/busco-3.0.2/lineage/arthropoda_odb9"  #Predefined BUSCO set can be downloaded from BUSCO website
 DIR_SRA="/home/zf/ncbi/public/sra"
+AUGUSTUS_SPECIES="fly"  #species parameter can be checked in /home/zf/install/Augustus-3.3.2/config/species
 
 #download the raw sequencing data
 #prefetch $SRA
@@ -56,9 +57,9 @@ echo "../bbtool/2.fq.gz" >> reads.list
 touch kmer.list
 if [ $READ_LENGTH -lt 120 ]
     then
-      for n in 0 1 2 3; do echo "21+$KMER_STEP*$n"|bc; done >> kmer.list
+      for n in 0 1 2 3; do echo "21+20*$n"|bc; done >> kmer.list
     else
-      for n in 0 1 2 3 4 5; do echo "21+$KMER_STEP*$n"|bc; done >> kmer.list
+      for n in 0 1 2 3 4 5; do echo "21+20*$n"|bc; done >> kmer.list
 fi
 
 #multi-kmer genome assembly
@@ -81,7 +82,7 @@ for kmer in $(cat ../kmer.list); do statswrapper.sh in="k$kmer".contigs.fa forma
 
 #Reduction of heterozygous contigs
 KMER_MAX=$(sed -n '$p' ../kmer.list)
-python2 $DIR_REDUNDANS/redundans.py -v -f k$KMER_MAX.contigs.fa -o ./reduced -t $THREADS --log log_redundans.txt --noscaffolding --nogapclosing
+python2 $DIR_REDUNDANS/redundans.py -v -f k$KMER_MAX.contigs.fa -o ./reduced -t $THREADS --log log_redundans.txt --noscaffolding --nogapclosing --identity 0.7
 
 mv reduced/scaffolds.reduced.fa k$KMER_MAX.contigs.reduced.fa && rm -rf reduced *fa.fai
 
@@ -121,5 +122,4 @@ rm -rf mapping BESST gapcloser.config reads.list scaffolds.gapcloser*
 
 #BUSCO assessment
 mkdir busco && cd busco/
-python $DIR_BUSCO/scripts/run_BUSCO.py -i ../scaffolds_$SPECIES.fa -c $THREADS -l $DIR_BUSCO_LINEAGE/insecta_odb9 -m geno -o $SPECIES -sp fly
-
+python $DIR_BUSCO/scripts/run_BUSCO.py -i ../scaffolds_$SPECIES.fa -c $THREADS -l $DIR_BUSCO_LINEAGE -m geno -o $SPECIES -sp $AUGUSTUS_SPECIES
