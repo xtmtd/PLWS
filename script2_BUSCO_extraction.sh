@@ -1,15 +1,16 @@
 #!/bin/bash
 
 #Tools MAFFT, trimAl and FASconCAT-G are used in this script and the former two have been installed in environmental paths
+#The final matrices and partition files are placed in /home/zf/Desktop/scripts/test/busco/extraction/loci_concat
 
 #mkdir raw_busco
 
 #Copy all the BUSCO results (run_* folders) into the same subfolder ./raw_busco
 
 #Define variables
-DIR_TRIMAL="/home/zf/trimal-1.4.1"
-DIR_FASconCAT="/home/zf/FASconCAT-G"
-THREADS="48"
+DIR_TRIMAL="/home/zf/install/trimal-1.4.1"
+DIR_FASconCAT="/home/zf/install/FASconCAT-G"
+THREADS="8"
 
 #Generate a file containing species list
 ls raw_busco/ | sed 's/run_//g' > species.list
@@ -132,4 +133,3 @@ do
 done
 echo -e '\n'
 echo "All the supermatrices and partition files are kept in extraction/loci_concat"
-
