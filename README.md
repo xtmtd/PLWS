@@ -64,7 +64,7 @@ Script4:
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-To faciliate the use of our pipeline and simplify the installation of various packages, we also prepared the virtual mirror (.vmdk), including all the bioinformatic tools and custom scripts ready in the CENTOS 7.3 system. It can be directly opened by VMware or VirtualBox, which are often installed on Windows systems. Please download it here: . More than 100 Gb (at least 50) disk space is recommened for its use. Below are related information on CENTOS system:  
+To faciliate the use of our pipeline and simplify the installation of various packages, we also prepared the virtual mirror (.vmdk), including all the bioinformatic tools and custom scripts ready in the CENTOS 7.3 system. It can be directly opened by VMware or VirtualBox, which are often installed on Windows systems. Please download it here: https://1drv.ms/f/s!Ak7sQGBGqlguq1gdk1KKIR7uwAfj. More than 100 Gb (at least 50) disk space is recommented for its use. Below is related information on CENTOS system:  
 
   operating system: centos 7.3  
   passwords of accounts, i.e. root and zf: 1  
