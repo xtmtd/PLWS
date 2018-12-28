@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#Prepare a species list file (species.list with base species Pediculus_humanus excluded) in the initial working folder
-#Copy all the genome assemblies to working_folder/assembly/ and replace assembly name using "species_name.fa"
+#Copy all the genome assemblies to working_folder/DIR_ASSEMBLY/ and replace assembly name using "species_name.fa"
 #Tools samtools, art, BBtools, faToTwoBit and stampy are used in this script and the former two have been installed in environmental paths
 
 
@@ -9,7 +8,6 @@
 DIR_ASSEMBLY="/home/zf/Desktop/scripts/test/uce/assembly"
 DIR_fa2bit="/usr/local/bin"
 DIR_STAMPY="/home/zf/install/stampy-1.0.32"
-SPECIES_NAME=$(cat species.list)
 base="Pseudachorutes_palmiensis"
 GROUP="Collembola"
 THREADS="8"
@@ -19,6 +17,13 @@ FINAL_SPECIFIC_COUNT="1" #value is not less than "SPECIFIC_COUNT"
 
 #Initiate the phyluce environment
 source activate phyluce
+
+#Generate a species list file (species.list with base species excluded) in the initial working folder
+cd $DIR_ASSEMBLY
+for file in * ; do echo ${file%.*} >> ../species.list; done
+sed -i "/"$base"/d" ../species.list
+cd ..
+SPECIES_NAME=$(cat species.list)
 
 mkdir genomes && cd genomes/
 
