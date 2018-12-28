@@ -59,9 +59,8 @@ Script2:
 2) Tools MAFFT, trimAl and FASconCAT-G are used in this script and the former two are recommended to be installed in environmental paths.
 
 Script3:   
-1) Prepare a species list file (species.list with base species excluded) in the initial working folder.  
-2) Copy all the genome assemblies to working_folder/assembly/ and replace assembly name using "species_name.fa". 
-3) Tools samtools, art, BBtools, faToTwoBit and stampy are used in this script and the former two are recommended to be installed in environmental paths.
+1) Copy all the genome assemblies to working_folder/DIR_ASSEMBLY/ and replace assembly name using "species_name.fa". 
+2) Tools samtools, art, BBtools, faToTwoBit and stampy are used in this script and the former two are recommended to be installed in environmental paths.
 
 Script4:  
 1) Prepare a probe set file (***.fasta) in the initial working folder.
