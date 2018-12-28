@@ -11,6 +11,7 @@ DIR_STAMPY="/home/zf/install/stampy-1.0.32"
 base="Pseudachorutes_palmiensis"
 GROUP="Collembola"
 THREADS="8"
+SIMULATE_COV="2"  #the coverage (usually 2-5) of simulated reads for each species; it can be increased when more loci are required
 SUBSTITUTION_RATE="0.05" #for the species very divergent, rate value can be increased to 0.1
 SPECIFIC_COUNT="1"  #the maximum value is the "number of species" (base species excluded)
 FINAL_SPECIFIC_COUNT="1" #value is not less than "SPECIFIC_COUNT"
@@ -62,7 +63,7 @@ cd .. && mkdir reads && cd reads/
 for SPECIES in $SPECIES_NAME
   do
     echo "Simulate interleaved reads from genome assembly of $SPECIES..."
-    art_illumina --paired --in ../genomes/$SPECIES/$SPECIES.fasta --out $SPECIES-pe100-reads --len 100 --fcov 2 --mflen 200 --sdev 50 -ir 0.0 -ir2 0.0 -dr 0.0 -dr2 0.0 -qs 100 -qs2 100 -na
+    art_illumina --paired --in ../genomes/$SPECIES/$SPECIES.fasta --out $SPECIES-pe100-reads --len 100 --fcov $SIMULATE_COV --mflen 200 --sdev 50 -ir 0.0 -ir2 0.0 -dr 0.0 -dr2 0.0 -qs 100 -qs2 100 -na
     reformat.sh in1=$SPECIES-pe100-reads1.fq in2=$SPECIES-pe100-reads2.fq out=$SPECIES-pe100-reads.fq.gz 1>>simulation.log 2>&1
     rm $SPECIES-pe100-reads1.fq $SPECIES-pe100-reads2.fq
   done
