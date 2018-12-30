@@ -181,7 +181,7 @@ do
   done
   cd matrix$percent/
   perl $DIR_FASconCAT/FASconCAT-G_v1.04.pl -a -p -p -s -l
-  rm uce*.fas && cd ..
+  cd ..
 done
 
 #Summarize the matrices
