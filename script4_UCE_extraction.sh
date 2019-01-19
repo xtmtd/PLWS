@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 #Prepare a probe set file (Phthiraptera-2.8Kv1.fasta) in the initial working folder
-#modify all genome assemblies endding with .fa and copy them to working_folder/genomes/
+#modify all genome assemblies endding with .fa ("species_names.fa") and copy them to working_folder/genomes/
 #Tools MAFFT, seqkit, trimAl, faToTwoBit and FASconCAT are used in this script and the former three have been installed in environmental paths
 
 #Define variables
@@ -33,7 +33,7 @@ cd ..
 
 #prepare a species list
 echo "prepare a species list..."
-ls genomes/ | sed "s/.fa//g" > species.list
+ls genomes/ | sed "s/'.fa'//g" > species.list
 
 SPECIES_NAME=$(cat species.list)
 
