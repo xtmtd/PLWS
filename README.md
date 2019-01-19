@@ -64,7 +64,7 @@ Script3:
 
 Script4:  
 1) Prepare a probe set file (***.fasta) in the initial working folder.
-2) Modify all genome assemblies endding with .fa and copy them to working_folder/genomes/ 
+2) Modify all genome assemblies endding with .fa ("species_names.fa") and copy them to working_folder/genomes/ 
 3) Tools MAFFT, seqkit, trimAl, faToTwoBit and FASconCAT are used in this script and the former three were recommended to be installed in environmental paths.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
