@@ -8,7 +8,6 @@
 #Copy all the BUSCO results (run_* folders) into the same subfolder ./raw_busco
 
 #Define variables
-DIR_TRIMAL="/home/zf/install/trimal-1.4.1"
 DIR_FASconCAT="/home/zf/install/FASconCAT-G"
 THREADS="8"
 
