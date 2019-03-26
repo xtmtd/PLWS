@@ -80,7 +80,7 @@ mkdir -p extraction/loci_trim/fna extraction/loci_trim/faa
 for LOCI_FILTER in $LOCI_NAME_FILTER
 do
   trimal -in extraction/loci_filter/faa_align/$LOCI_FILTER.faa -out extraction/loci_trim/faa/$LOCI_FILTER.aa.fas -automated1
-  trimal -in extraction/loci_trim/faa/$LOCI_FILTER.aa.fas -out extraction/loci_trim/fna/$LOCI_FILTER.nuc.fas -automated1 -matrix $DIR_TRIMAL/dataset/matrix.degenerated_dna -backtrans extraction/loci_filter/faa/$LOCI_FILTER.fna
+  trimal -in extraction/loci_trim/faa/$LOCI_FILTER.aa.fas -out extraction/loci_trim/fna/$LOCI_FILTER.nuc.fas -automated1 -matrix $DIR_TRIMAL/dataset/matrix.degenerated_dna -backtrans extraction/loci_filter/fna/$LOCI_FILTER.fna
 done
 
 #Concatenate all the nucleotide/protein alignments in phylip format and generate partition files
