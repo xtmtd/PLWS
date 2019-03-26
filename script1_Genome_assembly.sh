@@ -9,7 +9,6 @@
 
 
 #Define variables
-SRA="SRR5088473" #NCBI accession number
 SPECIES="Escherichia_coli"
 THREADS="8"
 READ_LENGTH="100" #bp
@@ -19,17 +18,7 @@ NORMALIZATION_TARGET="10"  #may be ranged from 10 to 20 or higher for low-covera
 DIR_REDUNDANS="/home/zf/install/redundans"
 DIR_BUSCO="/home/zf/install/busco-3.0.2"
 DIR_BUSCO_LINEAGE="/home/zf/install/busco-3.0.2/lineage/arthropoda_odb9"  #Predefined BUSCO set can be downloaded from BUSCO website
-DIR_SRA="/home/zf/ncbi/public/sra"
 AUGUSTUS_SPECIES="fly"  #species parameter can be checked in /home/zf/install/Augustus-3.3.2/config/species
-
-#download the raw sequencing data
-#prefetch $SRA
-
-#Convert the SRA format into gzipped fastq
-#parallel-fastq-dump -s $SRA.sra -t $THREADS --split-files $SRA.sra -O ./ --gzip
-
-#Subsample SRA data to the size of 4 G
-#reformat.sh in1="$SRA"_1.fastq.gz in2="$SRA"_2.fastq.gz out1=1.raw.fq.gz out2=2.raw.fq.gz reads=12500000
 
 mkdir bbtool && cd bbtool/
 
@@ -94,6 +83,7 @@ cd ..
 
 #Scaffolding assembled contigs
 runBESST -c ./minia/k$KMER_MAX.contigs.reduced.fa -f ./mapping/map.bam -o BESST -orientation fr --iter 10000
+test -s BESST/BESST_output/pass1/Scaffolds_pass1.fa && echo -e "Scaffolding has been finished\n" || (read -p "Library parameters cannot be assessed by BESST, please input the mean insert size (bp) and standard deviation (bp) of libraries, for example 300 50:      " m s && runBESST -c ./minia/k$KMER_MAX.contigs.reduced.fa -f ./mapping/map.bam -o BESST -orientation fr --iter 10000 -m $m -s $s)
 
 #Prepare config file forGapCloser
 touch gapcloser.config
