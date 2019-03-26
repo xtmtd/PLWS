@@ -155,7 +155,11 @@ for LOCI_FILTER in $LOCI_NAME_FILTER; do linsi loci_filter/$LOCI_FILTER.fa > loc
 
 #Trim the alignments
 mkdir loci_align_trim
-for LOCI_FILTER in $LOCI_NAME_FILTER; do trimal -in loci_align/$LOCI_FILTER.fa -out loci_align_trim/$LOCI_FILTER.fas -automated1 -matrix $DIR_TRIMAL/dataset/matrix.degenerated_dna; done
+for LOCI_FILTER in $LOCI_NAME_FILTER
+  do
+    echo "trim nucleotide sequence of loci $LOCI_FILTER ......"
+    trimal -in loci_align/$LOCI_FILTER.fa -out loci_align_trim/$LOCI_FILTER.fas -automated1 -matrix $DIR_TRIMAL/dataset/matrix.degenerated_dna
+  done
 
 #Concatenate all the nucleotide/protein alignments in phylip format and generate partition files
 mkdir -p matrices/all
