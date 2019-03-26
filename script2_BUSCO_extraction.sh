@@ -29,6 +29,7 @@ rm temp.list
 for SPECIES in $SPECIES_NAME
 	do
 	  cd raw_busco/run_$SPECIES/single_copy_busco_sequences/
+	  sed -i -n '1,2p' EOG*
 	  sed -i "1c >$SPECIES" EOG*
 	  cd ../../..
 	done
