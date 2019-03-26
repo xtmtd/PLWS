@@ -67,20 +67,20 @@ do
 done
 
 #Align all the faa and fna files
-mkdir -p extraction/loci_filter/fna_align extraction/loci_filter/faa_align
+mkdir -p extraction/loci_filter/faa_align
 LOCI_NAME_FILTER=$(cat extraction/loci_filter/loci_name_filter.log)
 for LOCI_FILTER in $LOCI_NAME_FILTER
 do
-  linsi --thread $THREADS extraction/loci_filter/fna/$LOCI_FILTER.fna > extraction/loci_filter/fna_align/$LOCI_FILTER.fna
   linsi --thread $THREADS extraction/loci_filter/faa/$LOCI_FILTER.faa > extraction/loci_filter/faa_align/$LOCI_FILTER.faa
+  test -s extraction/loci_filter/faa_align/$LOCI_FILTER.faa && echo "loci $LOCI_FILTER has been aligned" || mafft --thread $THREADS extraction/loci_filter/faa/$LOCI_FILTER.faa > extraction/loci_filter/faa_align/$LOCI_FILTER.faa
 done
 
 #Trim the alignments
 mkdir -p extraction/loci_trim/fna extraction/loci_trim/faa
 for LOCI_FILTER in $LOCI_NAME_FILTER
 do
-  trimal -in extraction/loci_filter/fna_align/$LOCI_FILTER.fna -out extraction/loci_trim/fna/$LOCI_FILTER.nuc.fas -automated1 -matrix $DIR_TRIMAL/dataset/matrix.degenerated_dna
-    trimal -in extraction/loci_filter/faa_align/$LOCI_FILTER.faa -out extraction/loci_trim/faa/$LOCI_FILTER.aa.fas -automated1 
+  trimal -in extraction/loci_filter/faa_align/$LOCI_FILTER.faa -out extraction/loci_trim/faa/$LOCI_FILTER.aa.fas -automated1
+  trimal -in extraction/loci_trim/faa/$LOCI_FILTER.aa.fas -out extraction/loci_trim/fna/$LOCI_FILTER.nuc.fas -automated1 -matrix $DIR_TRIMAL/dataset/matrix.degenerated_dna -backtrans extraction/loci_filter/faa/$LOCI_FILTER.fna
 done
 
 #Concatenate all the nucleotide/protein alignments in phylip format and generate partition files
