@@ -69,7 +69,7 @@ Script4:
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 Citation
-Feng Zhang, Yinhuan Ding, Chaodong Zhu, Xin Zhou, Michael C. Orr, Stefan Scheu, Yun-Xia Luan. 2018. Phylogenomics from Low-coverage Whole-genome Sequencing. Methods in Ecology and Evolution. (accepted)
+Feng Zhang, Yinhuan Ding, Chaodong Zhu, Xin Zhou, Michael C. Orr, Stefan Scheu, Yun-Xia Luan. 2019. Phylogenomics from Low-coverage Whole-genome Sequencing. Methods in Ecology and Evolution. DOI: 10.1111/2041-210X.13145
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 Contact
