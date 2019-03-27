@@ -15,8 +15,6 @@ Requirements
 
 Some bioinformatic tools are neccessary for above scripts. Most of them are recommended to be added into the environmental paths. Softwares, versions and source ate listed below.
 
-  SRA-tools v2.9.0 (https://github.com/ncbi/sratoolkit)  
-  parallel-fastq-dump v0.6.3 (https://github.com/rvalieris/parallel-fastq-dump)  
   BBTools v38.32 (https://sourceforge.net/projects/bbmap/)  
   Lighter v1.1.2 (https://github.com/mourisl/Lighter)  
   Minia v3.2	(https://github.com/GATB/minia)  
@@ -39,24 +37,25 @@ Some bioinformatic tools are neccessary for above scripts. Most of them are reco
 
   operating system: centos 7.3  
   passwords of accounts, i.e. root and zf: 1  
-  Most packages are installed under /usr/local/bin, /home/zf/install/ etc. Environmental variables and paths can be checked by "vi ~/.bashrc" and "printenv". Most executables can be directly performed without typing the installation paths. Some should be executed by initiating conda environments (/home/zf/install/miniconda/envs/), such as phyluce, just type 'source activate phyluce'.
+  Most packages are installed under /usr/local/bin, /home/zf/install/ etc. Environmental variables and paths can be checked by "vi ~/.bashrc" and "printenv". Most executables can be directly performed without typing the installation paths. UCE-related analyses should be executed by initiating conda environments (/home/zf/install/miniconda/envs/), such as phyluce, just type 'source activate phyluce'.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 User manual
 
-The requirements for each script have been described in the beginning of the bash script text. Values of variables/parameters, such as read length, tool path, number of threads etc., can be modified prior to analyses according to the status of sequencing data, computers etc. When everything is ready, just type 'sh ***.sh'.
+The requirements for each script have been described in the beginning of the bash script text. Values of variables/parameters, such as read length, tool path, number of threads etc., can be modified at the beginning of analyses following the script guidance.
 
 Below are some notes for each script although more details have been described in the script.
 
 Script1: 
-1) Modify the names of input raw paired read files as 1.raw.fq.gz and 2.raw.fq.gz in the working folder.  
-2) The default starting kmer value is 21 and thus kmer values are 21, 21+20, 21+2*20....  
-3) All the statistics of input reads and assemblies generated in the whole asembly progress are summerized respectively /bbtool/bbtool.log and /minia/assembly.log.  
-4) Tools pigz, BBTools, Lighter, Minia, redundans, Minimap2, samtools, BESST, GapCloser and BUSCO may be used in this script.
+1) Type 'sh script1_Genome_assembly1.sh forward_reads_file reverse_reads_file', e.g. sh script1_Genome_assembly1.sh 1.raw.fq.gz 2.raw.fq.gz
+2) Most executables are recommended to be added into the environmental paths. Tools pigz, BBTools, Lighter, Minia, redundans, Minimap2, samtools, BESST, GapCloser and BUSCO may be used and will be automatically checked prior to formal analyses in this script.
+3) The default starting kmer value is 21 and thus kmer values are 21, 21+20, 21+2*20....
+4) The statistics of assemblies generated in the asembly procedure are summerized in assembly.statistics
 
 Script2:  
-1) Copy all the BUSCO results (run_* folders) into the same subfolder ./raw_busco.  
-2) Tools MAFFT, trimAl and FASconCAT-G are used in this script and the former two are recommended to be installed in environmental paths.
+1) All the BUSCO results (run_* folders) are deposited in the same folder, e.g. BUSCOs/. Type 'sh script2_BUSCO_extraction.sh BUSCO_folder', e.g. sh script2_BUSCO_extraction.sh BUSCOs
+2) Tools MAFFT, trimAl and FASconCAT-G are used in this script and will be automatically checked prior to formal analyses
+3) The final matrices, partition files and summary are placed in 4-loci_concat/
 
 Script3:   
 1) Copy all the genome assemblies to working_folder/DIR_ASSEMBLY/ and replace assembly name using "species_name.fa". 
