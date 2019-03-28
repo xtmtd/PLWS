@@ -111,8 +111,8 @@ echo "SUBSTITUTION_RATE=$SUBSTITUTION_RATE" >> parameters.cfg
 
 echo -e "\n" | tee -a log.txt
 
-#copy the assemblies to 0-assemblies/
-echo "copy the assemblies to 0-assemblies/" | tee -a log.txt
+#copy the assemblies to 0-genomes/
+echo "copy the assemblies to 0-genomes/" | tee -a log.txt
 cp -r $1 0-genomes
 
 
