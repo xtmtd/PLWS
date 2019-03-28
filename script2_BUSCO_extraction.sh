@@ -166,7 +166,6 @@ do
 done
 
 #Summerize the matrices
-echo "Infmormation of matrices is saved in 4-loci_concat/summary.extraction" | tee -a summary.extraction
 echo -e '\n'
 echo "protein BUSCO matrices" | tee -a summary.extraction
 echo "primary matrix has $(awk 'NF{a=$0}END{print a}' all/faa/FcC_supermatrix_partition.txt | sed -r 's/.*-(.*).*/\1/') sites and $(cat all/faa/FcC_supermatrix_partition.txt | wc -l) loci" | tee -a summary.extraction
@@ -183,3 +182,4 @@ do
 done
 echo -e '\n'
 echo "All the supermatrices and partition files are kept in 4-loci_concat/"
+echo "Infmormation of matrices is saved in 4-loci_concat/summary.extraction"
