@@ -31,7 +31,6 @@ Some bioinformatic tools are neccessary for above scripts. Most of them are reco
   faToTwoBit	(http://hgdownload.soe.ucsc.edu/admin/exe/)  
   ART-20160605	(https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm)  
   Stampy v1.0.32	(http://www.well.ox.ac.uk/project-stampy)  
-  SeqKit v0.9.3	(https://github.com/shenwei356/seqkit)
   
  To faciliate the use of our pipeline and simplify the installation of various packages, we also prepared the virtual mirror (.vmdk), including all the bioinformatic tools and custom scripts ready in the CENTOS 7.3 system. It can be directly opened by VMware or VirtualBox, which are often installed on Windows systems. Please download it here: https://1drv.ms/f/s!Ak7sQGBGqlguq1gdk1KKIR7uwAfj. More than 100 Gb (at least 50) disk space is recommented for its use. Below is related information on CENTOS system:  
 
@@ -63,9 +62,9 @@ Script3:
 3) Tools art, BBtools, faToTwoBit and stampy, as well as PHYLUCE conda enviorment, are used and will be automatically checked prior to formal analyses in this script
 
 Script4:  
-1) Prepare a probe set file (***.fasta) in the initial working folder.
-2) Modify all genome assemblies endding with .fa ("species_names.fa") and copy them to working_folder/genomes/ 
-3) Tools MAFFT, seqkit, trimAl, faToTwoBit and FASconCAT are used in this script and the former three were recommended to be installed in environmental paths.
+1) Type 'sh script4_UCE_extraction.sh assemblies_folder probe_sequence', e.g. sh script3_UCE_probe_design.sh assemblies probe.fasta
+2) Modify all genome assemblies endding with .fa ("SPECIES_NAME.fa") and copy them to the same folder
+3) Tools faToTwoBit and FASconCAT, as well as PHYLUCE conda enviorment, are used and will be automatically checked prior to formal analyses in this script. MAFFT and trimal are not necessary to install because they have been included in the PHYLUCE conda enviorment.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 Citation
