@@ -149,7 +149,7 @@ rm *.fa
 for SPECIES in *; do mkdir ${SPECIES%.*}; mv $SPECIES ${SPECIES%.*}; done
 
 #Convert genomes to 2bit format
-echo "Convert genomes to 2bit format..." | tee -a log.txt
+echo "Convert genomes to 2bit format..." | tee -a ../log.txt
 for SPECIES in *; do $DIR_FATOTWOBIT/faToTwoBit $SPECIES/$SPECIES.fasta $SPECIES/${SPECIES%.*}.2bit; done
 
 #Simulate interleaved reads from genome assemblies (base genome "Pediculus_humanus" excluded)
