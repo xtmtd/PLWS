@@ -58,7 +58,7 @@ Script2:
 3) The final matrices, partition files and summary are placed in 4-loci_concat/
 
 Script3:   
-1) Type 'sh script3_UCE_probe_design assemblies_folder', e.g. sh script3_UCE_probe_design.sh assemblies
+1) Type 'sh script3_UCE_probe_design.sh assemblies_folder', e.g. sh script3_UCE_probe_design.sh assemblies
 2) Copy all the genome assemblies to a folder (e.g. assemblies/) and replace assembly name using "SPECIES_NAME.fa"
 3) Tools art, BBtools, faToTwoBit and stampy, as well as PHYLUCE conda enviorment, are used and will be automatically checked prior to formal analyses in this script
 
