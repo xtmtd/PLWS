@@ -26,7 +26,6 @@ if [ $(which pigz) ]
         done
       echo "pigz ...... OK" | tee -a log.txt
 fi
-echo -e "\n" >> log.txt
 
 #check BBtools
 if [ $(which bbduk.sh) ]
@@ -41,7 +40,6 @@ if [ $(which bbduk.sh) ]
         done
       echo "BBtools ...... OK" | tee -a log.txt
 fi
-echo -e "\n" >> log.txt
 
 #check Lighter
 if [ $(which lighter) ]
@@ -56,7 +54,6 @@ if [ $(which lighter) ]
         done
       echo "Lighter ...... OK" | tee -a log.txt
 fi
-echo -e "\n" >> log.txt
 
 #check Minia
 if [ $(which minia) ]
@@ -71,7 +68,6 @@ if [ $(which minia) ]
         done
       echo "Minia ...... OK" | tee -a log.txt
 fi
-echo -e "\n" >> log.txt
 
 #check Redundans
 if [ $(which redundans.py) ]
@@ -86,7 +82,6 @@ if [ $(which redundans.py) ]
         done
       echo "Redundans ...... OK" | tee -a log.txt
 fi
-echo -e "\n" >> log.txt
 
 #check Minimap2
 if [ $(which minimap2) ]
@@ -101,7 +96,6 @@ if [ $(which minimap2) ]
         done
       echo "Minimap2 ...... OK" | tee -a log.txt
 fi
-echo -e "\n" >> log.txt
 
 #check Samtools
 if [ $(which samtools) ]
@@ -116,7 +110,6 @@ if [ $(which samtools) ]
         done
       echo "Samtools ...... OK" | tee -a log.txt
 fi
-echo -e "\n" >> log.txt
 
 #check BESST
 if [ $(which runBESST) ]
@@ -131,7 +124,6 @@ if [ $(which runBESST) ]
         done
       echo "BESST ...... OK" | tee -a log.txt
 fi
-echo -e "\n" >> log.txt
 
 #check GapCloser
 if [ $(which GapCloser) ]
@@ -146,7 +138,6 @@ if [ $(which GapCloser) ]
         done
       echo "GapCloser ...... OK" | tee -a log.txt
 fi
-echo -e "\n" >> log.txt
 
 #check BUSCO
 if [ $(which run_BUSCO.py) ]
@@ -165,6 +156,7 @@ echo -e "\n" >> log.txt
 
 #Check species name
 read -p "Please input the species name as the prefix of resulting files (e.g. Escherichia_coli):      " SPECIES
+echo "SPECIES=$SPECIES" >> parameters.cfg
 
 #Check the threads can be used
 read -p "Please input the number of threads/cores (e.g. 8):      " THREADS
@@ -172,6 +164,7 @@ until [ $THREADS -gt 0 ]
     do
       read -p "Please input the correct integer for the number of threads/cores (e.g. 8):      " THREADS
     done
+echo "THREADS=$THREADS" >> parameters.cfg
 
 #Check the read length of sequencing data
 read -p "Please input the read length of sequencing data (e.g. 100, 150):      " READ_LENGTH
@@ -179,6 +172,7 @@ until [ $READ_LENGTH -gt 0 ]
     do
       read -p "Please input the correct integer for the read length of sequencing data (e.g. 100, 150 ):      " READ_LENGTH
     done
+echo "READ_LENGTH=$READ_LENGTH" >> parameters.cfg
 
 #Check the genome size
 read -p "Please input the approximate genome size (bp) for the erroe correction step; input value usually slightly smaller than the real genome size (e.g. 4000000):      " GENOME_SIZE
@@ -186,6 +180,7 @@ until [ $GENOME_SIZE -gt 0 ]
     do
       read -p "Please input the correct integer for the genome size (bp); input value usually slightly smaller than the real genome size (e.g. 4000000):      " GENOME_SIZE
     done
+echo "GENOME_SIZE=$GENOME_SIZE" >> parameters.cfg
 
 #Check the memory
 read -p "Please input the memory size (MB) available for assembly (e.g. 20000):      " MEMORY
@@ -193,6 +188,7 @@ until [ $MEMORY -gt 0 ]
     do
       read -p "Please input the correct integer for the memory size (MB) available for assembly (e.g. 20000):      " MEMORY
     done
+echo "MEMORY=$MEMORY" >> parameters.cfg
 
 #Define the target normalization depth
 read -p "Please input the target normalization depth, which may be ranged from 10 to 20 or higher for low-coverage reads (e.g. 10):      " NORMALIZATION_TARGET
@@ -200,19 +196,21 @@ until [ $NORMALIZATION_TARGET -gt 0 ]
     do
       read -p "Please input the correct integer for the target normalization depth (e.g. 10):      " NORMALIZATION_TARGET
     done
+echo "NORMALIZATION_TARGET=$NORMALIZATION_TARGET" >> parameters.cfg
 
 #Check AUGUSTUS species for BUSCO analyses
 until [ -s $AUGUSTUS_CONFIG_PATH/species/$AUGUSTUS_SPECIES/"$AUGUSTUS_SPECIES"_parameters.cfg ]
     do
       read -p "Please input the AUGUSTUS species (they can be checked in $AUGUSTUS_CONFIG_PATH/species/) for BUSCO analyses (e.g. fly, honeybee1 ...):      " AUGUSTUS_SPECIES
     done
+echo "AUGUSTUS_SPECIES=$AUGUSTUS_SPECIES" >> parameters.cfg
 
 #Check Predefined BUSCO set for BUSCO analyses
 until [ -s $DIR_BUSCO_LINEAGE/ancestral ]
     do
       read -p "Please input the directory of Predefined BUSCO lineage set for BUSCO analyses (e.g. /home/zf/install/busco-3.0.2/lineage/arthropoda_odb9):      " DIR_BUSCO_LINEAGE
     done
-
+echo "DIR_BUSCO_LINEAGE=$DIR_BUSCO_LINEAGE" >> parameters.cfg
 
 
 ##prepare data for assembly
@@ -299,8 +297,8 @@ $DIR_SAMTOOLS/samtools index map.bam -@ $THREADS
 
 #Scaffolding with BESST
 $DIR_BESST/runBESST -c ../1-assembly/k$KMER_MAX.contigs.reduced.fa -f map.bam -o ./ -orientation fr --iter 10000
-test -s BESST_output/pass1/Scaffolds_pass1.fa && echo || (read -p "Library parameters cannot be assessed by BESST, please input the mean insert size (bp) and standard deviation (bp) of libraries, for example 300 50:      " m s && $DIR_BESST/runBESST -c ../1-assembly/k$KMER_MAX.contigs.reduced.fa -f map.bam -o ./ -orientation fr --iter 10000 -m $m -s $s)
-test -s BESST_output/pass1/Scaffolds_pass1.fa && echo || (read -p "Input library parameters may be wrong, please input the mean insert size (bp) and standard deviation (bp) of libraries again, for example 300 50:      " m s && $DIR_BESST/runBESST -c ../1-assembly/k$KMER_MAX.contigs.reduced.fa -f map.bam -o ./ -orientation fr --iter 10000 -m $m -s $s)
+test -s BESST_output/pass1/Scaffolds_pass1.fa && echo || (read -p "Library parameters cannot be assessed by BESST, please input the mean insert size (bp) and standard deviation (bp) of libraries, for example 300 50:      " m s && echo "m=$m" "s=$s" >> parameters.cfg && $DIR_BESST/runBESST -c ../1-assembly/k$KMER_MAX.contigs.reduced.fa -f map.bam -o ./ -orientation fr --iter 10000 -m $m -s $s)
+test -s BESST_output/pass1/Scaffolds_pass1.fa && echo || (read -p "Input library parameters may be wrong, please input the mean insert size (bp) and standard deviation (bp) of libraries again, for example 300 50:      " m s && echo "m=$m" "s=$s" >> parameters.cfg && $DIR_BESST/runBESST -c ../1-assembly/k$KMER_MAX.contigs.reduced.fa -f map.bam -o ./ -orientation fr --iter 10000 -m $m -s $s)
 test -s BESST_output/pass1/Scaffolds_pass1.fa && (echo -e "Scaffolding has been finished\n" | tee -a ../log.txt) || (echo "Scaffolding with BESST failed. Please try other tools for scaffolding or use the assembly in directory 1-assembly for BUSCO analyses" && exit)
 echo -e "\n"  | tee -a ../log.txt
 cd ..
