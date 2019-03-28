@@ -1,5 +1,5 @@
 #!/bin/bash
-#2019.03.27
+#2019.03.28
 
 #Type 'sh script1_Genome_assembly1.sh forward_reads_file reverse_reads_file', e.g. sh script1_Genome_assembly1.sh 1.raw.fq.gz 2.raw.fq.gz
 #Most executables are recommended to be added into the environmental paths
