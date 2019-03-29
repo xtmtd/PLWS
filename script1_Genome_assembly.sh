@@ -217,7 +217,7 @@ echo "DIR_BUSCO_LINEAGE=$DIR_BUSCO_LINEAGE" >> parameters.cfg
 mkdir 0-data
 
 #group overlapping reads into clumps and remove duplicates
-echo "Clumpify and remove duplicates......" | tee -a ../log.txt
+echo "Clumpify and remove duplicates......" | tee -a log.txt
 $DIR_BBTOOLS/clumpify.sh in1=$1 in2=$2 out1=0-data/1.clumped.fq.gz out2=0-data/2.clumped.fq.gz pigz dedupe 1>>log.txt 2>&1
 echo -e "\n"  
 
