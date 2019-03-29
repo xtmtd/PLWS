@@ -54,7 +54,7 @@ Script1:
 Script2:  
 1) All the BUSCO results (run_* folders) are deposited in the same folder, e.g. BUSCOs/. Type 'sh script2_BUSCO_extraction.sh BUSCO_folder', e.g. sh script2_BUSCO_extraction.sh BUSCOs
 2) Tools MAFFT, trimAl and FASconCAT-G are used in this script and will be automatically checked prior to formal analyses
-3) The final matrices, partition files and summary are placed in 4-loci_concat/
+3) The final matrices, partition files and summary are placed in 5-loci_concat/
 
 Script3:   
 1) Type 'sh script3_UCE_probe_design.sh assemblies_folder', e.g. sh script3_UCE_probe_design.sh assemblies
