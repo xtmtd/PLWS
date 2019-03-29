@@ -131,7 +131,7 @@ for SPECIES in $SPECIES_NAME; do echo "$SPECIES:../0-genomes/$SPECIES/$SPECIES.2
 echo -e "\n" | tee -a ../log.txt
 echo "Align bait set to the extant genome sequences..." | tee -a ../log.txt
 cd .. && mkdir 1-uce_align && cd 1-uce_align/
-phyluce_probe_run_multiple_lastzs_sqlite --db uces.sqlite --output $GROUP-genome-lastz --probefile ../probe.fasta --scaffoldlist $(cat ../species.list) --genome-base-path /home/zf/Desktop/scripts/test_UCE_extraction/test/0-genomes --identity 50 --cores $THREADS
+phyluce_probe_run_multiple_lastzs_sqlite --db uces.sqlite --output $GROUP-genome-lastz --probefile ../probe.fasta --scaffoldlist $(cat ../species.list) --genome-base-path ../0-genomes --identity 50 --cores $THREADS
 
 #Extracting FASTA sequence matching UCE loci from genome sequences
 echo -e "\n" | tee -a ../log.txt
