@@ -302,6 +302,6 @@ echo "Remove duplicates from bait set..." | tee -a ../log.txt
 phyluce_probe_easy_lastz --target $GROUP-v1-master-probe-list.fasta --query $GROUP-v1-master-probe-list.fasta --identity 50 --coverage 50 --output $GROUP-v1-master-probe-list-TO-SELF-PROBES.lastz | tee -a ../log.txt
 phyluce_probe_remove_duplicate_hits_from_probes_using_lastz --fasta $GROUP-v1-master-probe-list.fasta --lastz $GROUP-v1-master-probe-list-TO-SELF-PROBES.lastz --probe-prefix=uce- | tee -a ../log.txt
 
-echo "The final bait set is /probe_design/"$GROUP"-v1-master-probe-list-DUPE-SCREENED.fasta" | tee -a ../log.txt
+echo "The final bait set is /5-probe_design/"$GROUP"-v1-master-probe-list-DUPE-SCREENED.fasta" | tee -a ../log.txt
 
 source deactivate
