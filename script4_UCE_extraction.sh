@@ -2,7 +2,7 @@
 #2019.03.28 by ZF
 
 
-#Type 'sh script4_UCE_extraction.sh assemblies_folder probe_sequence', e.g. sh script3_UCE_probe_design.sh assemblies probe.fasta
+#Type 'sh script4_UCE_extraction.sh assemblies_folder probe_sequence', e.g. sh script4_UCE_extraction.sh assemblies probe.fasta
 #Prepare a probe set file (e.g. Phthiraptera-2.8Kv1.fasta)
 #Modify all genome assemblies endding with .fa ("SPECIES_NAME.fa") and copy them to the same folder
 #Tools faToTwoBit and FASconCAT, as well as PHYLUCE conda enviorment, are used and will be automatically checked prior to formal analyses in this script. MAFFT and trimal are not necessary to install because they have been included in the PHYLUCE conda enviorment.
