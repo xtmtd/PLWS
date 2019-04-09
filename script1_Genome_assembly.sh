@@ -201,7 +201,7 @@ echo "NORMALIZATION_TARGET=$NORMALIZATION_TARGET" >> parameters.cfg
 #Check AUGUSTUS species for BUSCO analyses
 until [ -s $AUGUSTUS_CONFIG_PATH/species/$AUGUSTUS_SPECIES/"$AUGUSTUS_SPECIES"_parameters.cfg ]
     do
-      read -p "Please input the AUGUSTUS species (they can be checked in $AUGUSTUS_CONFIG_PATH/species/) for BUSCO analyses (e.g. fly, honeybee1 ...):      " AUGUSTUS_SPECIES
+      read -p "Please input the AUGUSTUS species (they can be checked in "$AUGUSTUS_CONFIG_PATH"/species/) for BUSCO analyses (e.g. fly, honeybee1 ...):      " AUGUSTUS_SPECIES
     done
 echo "AUGUSTUS_SPECIES=$AUGUSTUS_SPECIES" >> parameters.cfg
 
