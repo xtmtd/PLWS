@@ -7,8 +7,8 @@ We present a novel WGS-based pipeline for extracting essential phylogenomic mark
 All four bash scripts are only tested in Centos operating system, and may be available for other Linux systems. Their functions are described below.
   1. script1_Genome_assembly.sh: Script 1 performs main rapid genome assembly steps, i.e. read quality trimming and normalization (BBtools),  error correction (Lighter), multi-k-mer assembly (Minia3), reduction of heterozygous contigs (Redundans), scaffolding (BESST), gap filling (GapCloser) and BUSCO assessment (BUSCO).
   2. script2_BUSCO_extraction.sh: Script 2 extracts single-copy orthologs (BUSCOs) from previous BUSCO assessments and generates nuclotide/protein alignment matrices of 50%-100% completeness (MAFFT, trimAl and FASconCAT-G) and partitioning schemes for phylogenetic analyses.
-  3. script3_UCE_probe_design.sh: Script 3 can design UCE probe with tools samtools, art, BBtools, faToTwoBit and stampy.
-  4. script4_UCE_extraction.sh: Script 4 extracts UCE loci from genome assemblies and generates alignment matrices of 50%-100% completeness and partitioning schemes for phylogenetic analyses. Tools MAFFT, seqkit, trimAl, faToTwoBit and FASconCAT are required.
+  3. script3_UCE_probe_design.sh: Script 3 can design UCE probe with tools art, BBtools, faToTwoBit and stampy.
+  4. script4_UCE_extraction.sh: Script 4 extracts UCE loci from genome assemblies and generates alignment matrices of 50%-100% completeness and partitioning schemes for phylogenetic analyses. Tools faToTwoBit and FASconCAT are required.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 Requirements
