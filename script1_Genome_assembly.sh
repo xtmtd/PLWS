@@ -78,7 +78,7 @@ if [ $(which redundans.py) ]
     else
       until [ -x $DIR_REDUNDANS/redundans.py ]
         do
-          read -p "Redundans is not found. Please input its installation directory (absolute path, e.g. /usr/bin):      " DIR_REDUNDANS
+          read -p "Redundans is not found. Please input its installation directory (absolute path, e.g. /home/zf/install/redundans):      " DIR_REDUNDANS
         done
       echo "Redundans ...... OK" | tee -a log.txt
 fi
