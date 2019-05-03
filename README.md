@@ -45,7 +45,7 @@ The requirements for each script have been described in the beginning of the bas
 Below are some notes for each script although more details have been described in the script.
 
 Script1: 
-1) Type 'sh script1_Genome_assembly1.sh forward_reads_file reverse_reads_file', e.g. sh script1_Genome_assembly1.sh 1.raw.fq.gz 2.raw.fq.gz
+1) Type 'sh script1_Genome_assembly1.sh forward_reads_file reverse_reads_file', e.g. sh script1_Genome_assembly1.sh 1.clean.fq.gz 2.clean.fq.gz. Adaptors must to be removed prior to the analyses.
 2) Most executables are recommended to be added into the environmental paths. Tools pigz, BBTools, Minia, redundans, Minimap2, samtools, BESST, GapCloser and BUSCO may be used and will be automatically checked prior to formal analyses in this script.
 3) The default starting kmer value is 21 and thus kmer values are 21, 21+20, 21+2*20....
 4) The statistics of assemblies generated in the asembly procedure are summerized in assembly.statistics
