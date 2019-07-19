@@ -128,7 +128,7 @@ do
   $DIR_TRIMAL/trimal -in 3-faa_align/$LOCI_FILTER.faa -out 4-loci_trim/faa/$LOCI_FILTER.aa.fas -automated1
   echo -e '\n'
   echo "trim nucleotide sequence of loci $LOCI_FILTER ......"
-  $DIR_TRIMAL/trimal -in 4-loci_trim/faa/$LOCI_FILTER.aa.fas -out 4-loci_trim/fna/$LOCI_FILTER.nuc.fas -automated1 -backtrans 2-loci_filter/fna/$LOCI_FILTER.fna
+  $DIR_TRIMAL/trimal -in 3-faa_align/$LOCI_FILTER.faa -out 4-loci_trim/fna/$LOCI_FILTER.nuc.fas -automated1 -backtrans 2-loci_filter/fna/$LOCI_FILTER.fna
   echo -e '\n'
 done
 
