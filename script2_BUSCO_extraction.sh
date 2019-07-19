@@ -128,8 +128,12 @@ do
   $DIR_TRIMAL/trimal -in 3-faa_align/$LOCI_FILTER.faa -out 4-loci_trim/faa/$LOCI_FILTER.aa.fas -automated1
   echo -e '\n'
   echo "trim nucleotide sequence of loci $LOCI_FILTER ......"
-  $DIR_TRIMAL/trimal -in 3-faa_align/$LOCI_FILTER.faa -out 4-loci_trim/fna/$LOCI_FILTER.nuc.fas -automated1 -backtrans 2-loci_filter/fna/$LOCI_FILTER.fna
+  $DIR_TRIMAL/trimal -in 3-faa_align/$LOCI_FILTER.faa -out 4-loci_trim/fna/$LOCI_FILTER.nuc.trim.fas -automated1 -backtrans 2-loci_filter/fna/$LOCI_FILTER.fna
   echo -e '\n'
+  echo "align nucleotide sequence of loci $LOCI_FILTER ......"
+  $DIR_MAFFT/linsi --thread $THREADS 4-loci_trim/fna/$LOCI_FILTER.nuc.trim.fas > 4-loci_trim/fna/$LOCI_FILTER.nuc.fas
+  test -s 4-loci_trim/fna/$LOCI_FILTER.nuc.fas && echo "nucleotide sequence of loci $LOCI_FILTER has been aligned" || $DIR_MAFFT/mafft --thread $THREADS 4-loci_trim/fna/$LOCI_FILTER.nuc.trim.fas > 4-loci_trim/fna/$LOCI_FILTER.nuc.fas
+  rm 4-loci_trim/fna/$LOCI_FILTER.nuc.trim.fas
 done
 
 #Concatenate all the nucleotide/protein alignments in phylip format and generate partition files
