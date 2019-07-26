@@ -30,6 +30,7 @@ Some bioinformatic tools are neccessary for above scripts. Most of them are reco
   faToTwoBit	(http://hgdownload.soe.ucsc.edu/admin/exe/)  
   ART-20160605	(https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm)  
   Stampy v1.0.32	(http://www.well.ox.ac.uk/project-stampy)  
+  TransDecoder v5.5.0 (https://github.com/TransDecoder/TransDecoder)
   
  To faciliate the use of our pipeline and simplify the installation of various packages, we also prepared the virtual mirror (.vmdk), including all the bioinformatic tools and custom scripts ready in the CENTOS 7.3 system. It can be directly opened by VMware or VirtualBox, which are often installed on Windows systems. Please download it here: https://1drv.ms/f/s!Ak7sQGBGqlguq1gdk1KKIR7uwAfj. More than 100 Gb (at least 50) disk space is recommented for its use. Below is related information on CENTOS system:  
 
@@ -52,7 +53,7 @@ Script1:
 
 Script2:  
 1) All the BUSCO results (run_* folders) are deposited in the same folder, e.g. BUSCOs/. Type 'sh script2_BUSCO_extraction.sh BUSCO_folder', e.g. sh script2_BUSCO_extraction.sh BUSCOs
-2) Tools MAFFT, trimAl and FASconCAT-G are used in this script and will be automatically checked prior to formal analyses
+2) Tools TransDecoder, MAFFT, trimAl and FASconCAT-G are used in this script and will be automatically checked prior to formal analyses
 3) The final matrices, partition files and summary are placed in 5-loci_concat/
 
 Script3:   
