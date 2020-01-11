@@ -16,7 +16,7 @@ if [ $(which TransDecoder.LongOrfs) ]
     then
       echo "TransDecoder ...... OK"
       EXE_TRANSDECODER=$(which TransDecoder.LongOrfs)
-      DIR_TRANSDECODER=${EXE_MAFFT%/*}
+      DIR_TRANSDECODER=${EXE_TRANSDECODER%/*}
     else
       until [ -x $DIR_TRANSDECODER/TransDecoder.LongOrfs ]
         do
