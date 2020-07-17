@@ -1,7 +1,7 @@
 #!/bin/bash
-#2019.05.01 by ZF
+#2020.07.08 by ZF
 
-#Type 'sh script1_Genome_assembly1.sh forward_reads_file reverse_reads_file', e.g. sh script1_Genome_assembly1.sh 1.raw.fq.gz 2.raw.fq.gz
+#Type 'sh script1_Genome_assembly.sh forward_reads_file reverse_reads_file', e.g. sh script1_Genome_assembly.sh 1.raw.fq.gz 2.raw.fq.gz
 #Most executables are recommended to be added into the environmental paths
 #Tools pigz, BBTools, Minia, redundans, Minimap2, samtools, BESST, GapCloser and BUSCO may be used and will be automatically checked prior to formal analyses in this script
 #the default starting kmer value is 21 and thus kmer values are 21, 21+20, 21+2*20....
@@ -55,8 +55,12 @@ if [ $(which minia) ]
       echo "Minia ...... OK" | tee -a log.txt
 fi
 
+#check the step of normalization
+read -p "Execute the step of normalization of sequencing data? It can be helpful for reducing the data size and often improve the assembly. It can be skipped but the assembly time would be longer:  y or n      " NORM
+echo "NORMALIZATION=$NORM" >> parameters.cfg
+
 #check Redundans
-read -p "Execute the step of reduction of heterozygous contigs? It can be skipped in most cases. If heterozygosity of the final assembly is high (i.e. value of F% in BUSCO assessments is high), you can use somme tools, such as Redundans, to reducen them: y or n      " HETER
+read -p "Execute the step of reduction of heterozygous contigs? It can be skipped in most cases. If heterozygosity of the final assembly is high (i.e. value of D% in BUSCO assessments is high), you can use some tools, such as Redundans, to reducen them: y or n      " HETER
 echo "REDUNDANS=$HETER" >> parameters.cfg
 
 if [ "$HETER" == "y" ]
@@ -210,13 +214,19 @@ echo -e "\n"
 #Quality trimming
 cd 0-data/
 echo "Quality trimming......" | tee -a ../log.txt
-$DIR_BBTOOLS/bbduk.sh in1=1.clumped.fq.gz in2=2.clumped.fq.gz out1=1.trim.fq.gz out2=2.trim.fq.gz ziplevel=5 pigz ordered qtrim=rl trimq=15 minlen=15 ecco=t maxns=5 trimpolya=10 1>>../log.txt 2>&1
+$DIR_BBTOOLS/bbduk.sh in1=1.clumped.fq.gz in2=2.clumped.fq.gz out1=1.trim.fq.gz out2=2.trim.fq.gz ziplevel=5 pigz ordered qtrim=rl trimq=15 minlen=15 ecco=t maxns=5 trimpolya=10 trimpolyg=10 trimpolyc=10 1>>../log.txt 2>&1
 echo -e "\n" >> ../log.txt
 
 #Normalize coverage by down-sampling reads over high-depth areas of a genome
-echo "Normalizing coverage of raw data......" | tee -a ../log.txt
-$DIR_BBTOOLS/bbnorm.sh in1=1.trim.fq.gz in2=2.trim.fq.gz out1=1.nor.fq.gz out2=2.nor.fq.gz target="$NORMALIZATION_TARGET" min=2 histcol=2 khist=khist.txt peaks=peaks.txt 1>>../log.txt 2>&1
-echo -e "\n" >> ../log.txt
+if [ "$NORM" == "y" ]
+  then
+    echo "Normalizing coverage of raw data......" | tee -a ../log.txt
+    $DIR_BBTOOLS/bbnorm.sh in1=1.trim.fq.gz in2=2.trim.fq.gz out1=1.nor.fq.gz out2=2.nor.fq.gz target="$NORMALIZATION_TARGET" min=2 histcol=2 khist=khist.txt peaks=peaks.txt 1>>../log.txt 2>&1
+    echo -e "\n" >> ../log.txt
+  else
+    mv 1.trim.fq.gz 1.nor.fq.gz
+    mv 2.trim.fq.gz 2.nor.fq.gz
+fi
 
 mv 1.nor.fq.gz 1.fq.gz && mv 2.nor.fq.gz 2.fq.gz
 rm -rf *clump* *trim* *raw* *.fastq.gz
@@ -247,8 +257,9 @@ for KMER in $(cat ../kmer.list)
 do
       echo "Minia assembling at k=$KMER ......" | tee -a ../log.txt
       $DIR_MINIA/minia -in reads.list -kmer-size $KMER -abundance-min 2 -out k$KMER -max-memory $MEMORY
+      test -s k$KMER.contigs.fa && echo || ($DIR_MINIA/minia -in reads.list -kmer-size $KMER -abundance-min 2 -storage-type file -out k$KMER -max-memory $MEMORY)
       test -s k$KMER.contigs.fa && echo || ($DIR_MINIA/minia -in reads.list -kmer-size `expr $KMER - 2` -abundance-min 2 -out k$KMER -max-memory $MEMORY)
-      test -s k$KMER.contigs.fa && echo || ($DIR_MINIA/minia -in reads.list -kmer-size `expr $KMER - 10` -abundance-min 2 -out k$KMER -max-memory $MEMORY)
+      test -s k$KMER.contigs.fa && echo || ($DIR_MINIA/minia -in reads.list -kmer-size `expr $KMER - 2` -abundance-min 2 -storage-type file -out k$KMER -max-memory $MEMORY)
       test -s k$KMER.contigs.fa && (echo "Finished Minia k=$KMER" | tee -a ../log.txt) || (echo "Minia assembly with k-mer value of $KMER failed......" && exit)
       echo -e "\n"  | tee -a ../log.txt
       rm -rf dummy* *unitigs* *h5 trashme*
