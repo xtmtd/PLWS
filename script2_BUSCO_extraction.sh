@@ -88,7 +88,7 @@ rm temp.list
 for SPECIES in $SPECIES_NAME
 	do
 	  cd 0-raw_busco/run_$SPECIES/single_copy_busco_sequences/
-	  sed -i -n '1,2p' EOG*
+	  sed -i -n '1,2p' *.f*a
           for fna in *.fna
             do
               $DIR_TRANSDECODER/TransDecoder.LongOrfs -t $fna -m 20
@@ -96,9 +96,9 @@ for SPECIES in $SPECIES_NAME
               cp *dir/longest_orfs.pep $(ls $fna | cut -d . -f1).faa
               rm -rf *dir* *cmds
             done
-	  sed -i -n '1,2p' EOG*
-	  sed -i "1c >$SPECIES" EOG*
-	  sed -i "s/*//g" EOG*.faa
+	  sed -i -n '1,2p' *.f*a
+	  sed -i "1c >$SPECIES" *.f*a
+	  sed -i "s/*//g" *.faa
 	  cd ../../..
 	done
 
